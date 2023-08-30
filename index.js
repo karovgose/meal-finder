@@ -46,29 +46,26 @@ function getRandomMeal() {
     .then((response) => response.json())
     .then((data) => {
       let allMeals = data.meals;
-      if (allMeals) {
-        allMeals.forEach((meal) => {
-          console.log(meal);
-          let ingredients = [];
-          for (let i = 1; i < 20; i++) {
-            if (meal[`strIngredient${i}`]) {
-              ingredients.push(meal[`strIngredient${i}`]);
-            }
+
+      allMeals.forEach((meal) => {
+        console.log(meal);
+        let ingredients = [];
+        for (let i = 1; i < 20; i++) {
+          if (meal[`strIngredient${i}`]) {
+            ingredients.push(meal[`strIngredient${i}`]);
           }
-          let ingredientsList = ingredients
-            .map((ingredient) => `<li>${ingredient}</li>`)
-            .join("");
-          let article = `<article>
+        }
+        let ingredientsList = ingredients
+          .map((ingredient) => `<li>${ingredient}</li>`)
+          .join("");
+        let article = `<article>
           <h3 >${meal.strMeal}</h3>
           <img src="${meal.strMealThumb}" alt="meal picture" />
           <p>Ingredients:</p>
             <ul>${ingredientsList}</ul>
         </article>`;
-          photoWraper.insertAdjacentHTML("afterbegin", article);
-        });
-      } else {
-        alert("No meals found.");
-      }
+        photoWraper.insertAdjacentHTML("afterbegin", article);
+      });
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
